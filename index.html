@@ -1,0 +1,74 @@
+<!--
+Programa: Circulos em movimento
+Nome: Guilherme Holanda - Nº: 12 - Turma: 2°B
+Nome: Leonardo - Nº: 20.
+Nome: Lorenna Buriti - Nº:21.
+Nome: Marcus Vinicius - Nº: 22.
+Nome: Winicius Cobo - Nº: 36.
+
+DESCRIÇÃO: O programa deve mostrar dois circulos que se movem em direção um ao outro.
+-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Círculos em Movimento</title>
+  <meta charset="UTF-8">
+  <style>
+      canvas {
+          background-color: #A0A0A0;
+      }
+  </style>
+  <script type="text/javascript">
+       var yellowGamePiece, blueGamePiece;
+      
+      function startGame() {
+          yellowGamePiece = new component(40, "yellow", 7, 20);  
+          blueGamePiece = new component(40, "blue", 450, 250);  
+          myGameArea.start();
+      }
+      
+      var myGameArea = {
+          canvas: document.createElement("canvas"),
+          start: function() {
+              this.canvas.width = 500;
+              this.canvas.height = 300;
+              this.context = this.canvas.getContext("2d");
+              document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+              this.interval = setInterval(updateGameArea, 20); // velocidade
+          },
+          clear: function() {
+              this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          }
+      }
+
+      function component(radius, color, x, y) {
+          this.radius = radius;
+          this.x = x;
+          this.y = y;
+          this.color = color;
+          
+          this.update = function() {
+              var ctx = myGameArea.context;
+              ctx.beginPath();
+              ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+              ctx.fillStyle = this.color;
+              ctx.fill();
+          }
+      }
+
+      function updateGameArea() {
+          myGameArea.clear();
+          yellowGamePiece.update();
+          yellowGamePiece.x += 2;
+          yellowGamePiece.y += 1;
+          
+          blueGamePiece.update();
+          blueGamePiece.x -= 2;
+          blueGamePiece.y -= 1;
+      }
+  </script>
+</head>
+<body onload="startGame();">
+</body>
+</html>
